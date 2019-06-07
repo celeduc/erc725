@@ -7,7 +7,7 @@ const KeyManager = artifacts.require('KeyManager');
 
 contract('Forwarder', async (accounts) => {
   it('should be able to use Identity contract with forwarder', async () => {
-    const identity = await Identity.new();
+    const identity = await Identity.new(accounts[0]);
     const encodedData = getEncodedCall(identity, 'initialize', [keccak256(accounts[0])]);
     const forwarder = await createForwarder(identity.address, encodedData);
 
@@ -24,7 +24,7 @@ contract('Forwarder', async (accounts) => {
   });
 
   it('should be able to use KeyManager contract with forwarder', async () => {
-    const keyManager = await KeyManager.new();
+    const keyManager = await KeyManager.new(accounts[0]);
     const encodedData = getEncodedCall(keyManager, 'initialize');
     const forwarder = await createForwarder(keyManager.address, encodedData);
 
