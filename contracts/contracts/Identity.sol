@@ -11,9 +11,17 @@ contract Identity is ERC725 {
     mapping(bytes32 => bytes) store;
     
     address public owner;
+    bool public init;
     
     constructor(address _owner) public {
         owner = _owner;
+        init = false;
+    }
+
+    // This is obsolete but still expected in signature
+    function initialize(bytes32 ignored) public {
+      require(!init, "contract-already-initialized");
+      init = (ignored == ignored);
     }
 
 

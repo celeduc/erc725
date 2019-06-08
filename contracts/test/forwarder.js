@@ -7,17 +7,27 @@ const KeyManager = artifacts.require('KeyManager');
 
 contract('Forwarder', async (accounts) => {
   it('should be able to use Identity contract with forwarder', async () => {
+    console.log("111111111");
     const identity = await Identity.new(accounts[0]);
+    console.log("222222222");
     const encodedData = getEncodedCall(identity, 'initialize', [keccak256(accounts[0])]);
+    console.log("333333333");
     const forwarder = await createForwarder(identity.address, encodedData);
+    console.log("411111111");
 
     const identityForwarder = await Identity.at(forwarder.options.address);
+    console.log("511111111");
     await checkErrorRevert(identityForwarder.initialize(accounts[0]), 'contract-already-initialized');
+    console.log("611111111");
 
+    // this call fails with "only-owner-allowed"
     await identityForwarder.setData('0x0a', keccak256(accounts[1]));
+    console.log("711111111");
 
     const owner = await identityForwarder.getData('0x00');
+    console.log("811111111");
     const data = await identityForwarder.getData('0x0a');
+    console.log("911111111");
 
     assert.equal(owner, keccak256(accounts[0]));
     assert.equal(data, keccak256(accounts[1]));

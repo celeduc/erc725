@@ -16,9 +16,9 @@ async function checkErrorRevert(promise, errorMessage) {
 
 function getEncodedCall(instance, method, params = []) {
   const contract = new web3.eth.Contract(instance.abi)
-        console.log(contract)
-        console.log(contract.methods)
-        console.log(method)
+//        console.log(contract)
+//        console.log(contract.methods)
+//        console.log(method)
   return contract.methods[method](...params).encodeABI()
 }
 
